@@ -12,7 +12,7 @@ Scenario: Сheck some text in search results
       |{"ReportId": 0}|""|""|api/report/BalanceReconcilement/{ReportId}/delete|{"Content-type": "application/json", "Accept": "text/plain"}|POST|
       |""|""|""|api/Clients|""|GET|
       |""|""|""|api/Clients/export|""|GET|
-      |""|""|""|api/Clients/{gid}|""|GET|
+      |{"gid": 1}|""|""|api/Clients/{gid}|""|GET|
 #      |""|""|api/Clients|""|GET|
 #      |""|""|api/Clients|""|GET|
 #      |""|""|api/Clients|""|GET|

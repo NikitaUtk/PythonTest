@@ -8,9 +8,9 @@ import re
 
 def repalceVar(method, data):
     val = re.findall(r'{([^{}]+)}', method)
-    for i in val:
-        resStr = data[i]
-        method = str.replace(method, '{' + i + '}', str(resStr))
+    for (index, elem) in enumerate(val):
+        resStr = data[val[index]]
+        method = str.replace(method, '{' + elem + '}', str(resStr))
     return method
 class Responce:
 
@@ -41,11 +41,6 @@ class Responce:
         return [responce.url,responce.status_code, responce.text]
 
     if __name__ == "__main__":
-
-        i = json.loads('{"ReportId": 0}')
-        k = {"ReportId": 0}
-        print(i)
-        print(k)
         # repalceVar(method="api/Deals/{dealGid}/accounts/{accountGid}",data = {"dealGid": "11", "accountGid": "12"} )
-        s = getResponce('',method="api/report/BalanceReconcilement/{ReportId}/delete", typeRequest="POST",data={"ReportId": "0"})
+        s = getResponce('',method="api/report/BalanceReconcilement/{ReportId}/delete/{Test}", typeRequest="POST",data={"ReportId": "0", "Test":1})
         print(s[0])
