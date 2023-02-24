@@ -1,10 +1,13 @@
-import json
-
 import requests
 import Tests.auth as a
 from requests_ntlm import HttpNtlmAuth
 import re
 
+def get_logged_in_session():
+    sess = requests.Session()
+    s = sess.get(a.url + a.connection, auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password))
+    print (s.status_code)
+    return s
 
 def repalceVar(method, data):
     val = re.findall(r'{([^{}]+)}', method)
@@ -13,16 +16,17 @@ def repalceVar(method, data):
         method = str.replace(method, '{' + elem + '}', str(resStr))
     return method
 class Responce:
-
-
+    sess = requests.Session()
+    s= sess.get(a.url + a.connection, auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password))
     def getResponce(self, method, typeRequest, json={}, data={} , params={}, headers={"Content-type": "application/json", "Accept": "text/plain"}):
         # data = data -В data помещаются параметры которые необходимо обязательно указать
         # headers = headers
         # params = params В params помещаются параметры которые будут указаны после url
         # json Помещаются параметры которые будут передаваться в body POST запроса
         method = repalceVar(method, data)
+        s = get_logged_in_session()
         if(typeRequest == "POST"):
-            responce = requests.post(a.url + method,
+            responce = s.post(a.url + method,
                                  auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password),
                                  headers=headers,
                                  json=json
@@ -42,5 +46,6 @@ class Responce:
 
     if __name__ == "__main__":
         # repalceVar(method="api/Deals/{dealGid}/accounts/{accountGid}",data = {"dealGid": "11", "accountGid": "12"} )
-        s = getResponce('',method="api/report/BalanceReconcilement/{ReportId}/delete/{Test}", typeRequest="POST",data={"ReportId": "0", "Test":1})
-        print(s[0])
+        s = getResponce('',method="api/Audit", typeRequest="GET")
+        print(s[0] + " Status code: " + str(s[1]))
+        print(get_logged_in_session())
