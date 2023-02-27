@@ -7,7 +7,7 @@ def get_logged_in_session():
     sess = requests.Session()
     s = sess.get(a.url + a.connection, auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password))
     print (s.status_code)
-    return s
+    return s.cookies
 
 def repalceVar(method, data):
     val = re.findall(r'{([^{}]+)}', method)
@@ -16,17 +16,14 @@ def repalceVar(method, data):
         method = str.replace(method, '{' + elem + '}', str(resStr))
     return method
 class Responce:
-    sess = requests.Session()
-    s= sess.get(a.url + a.connection, auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password))
     def getResponce(self, method, typeRequest, json={}, data={} , params={}, headers={"Content-type": "application/json", "Accept": "text/plain"}):
         # data = data -В data помещаются параметры которые необходимо обязательно указать
         # headers = headers
         # params = params В params помещаются параметры которые будут указаны после url
         # json Помещаются параметры которые будут передаваться в body POST запроса
         method = repalceVar(method, data)
-        s = get_logged_in_session()
         if(typeRequest == "POST"):
-            responce = s.post(a.url + method,
+            responce = requests.post(a.url + method,
                                  auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password),
                                  headers=headers,
                                  json=json
