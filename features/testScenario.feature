@@ -102,8 +102,54 @@ Scenario Outline: Сheck some text in search results
 
       Examples: Log
       |data|json_|params|method|headers|typeRequest|
-      |{"expId": 1}|""|""|api/Expertise/{expId}/applied_method|""|GET|
-      |{"expId": 1}|""|""|api/Expertise/{expId}/applied_method|""|GET|
-      |{"expId": 1}|""|""|api/Expertise/{expId}/applied_method|""|GET|
-      |{"expId": 1}|""|""|api/Expertise/{expId}/applied_method|""|GET|
-      |{"expId": 1}|""|""|api/Expertise/{expId}/applied_method|""|GET|
+      |""|""|""|api/Log|""|GET|
+      |""|""|""|api/Log/oracle|""|GET|
+      |""|""|""|api/Log/export|""|GET|
+      |""|""|""|api/Log/oracle/export|""|GET|
+      |""|""|""|api/Expertise/{expId}/applied_method|""|GET|
+
+      Examples: Method
+      |data|json_|params|method|headers|typeRequest|
+      |""|""|{"versionDate": 1, "modifiedDate": 1}|api/Method|""|GET|
+
+      Examples: PNDCalc
+      |data|json_|params|method|headers|typeRequest|
+      |""|""|""|api/PNDCalc/month|""|GET|
+      |""|{"dealGid": 0,"userGid": 0,"modifiedDate": "string","reportDate": "string"}|""|api/PNDCalc/month|""|POST|
+      |{"calcId": 1}|{"deletedId": 0,"userGid": 0}|""|api/PNDCalc/month/{calcId}/delete|""|POST|
+      |""|{"id": 0,"userGid": 0}|""|api/PNDCalc/month/exc|""|POST|
+      |{"calcId": 1}|""|""|api/PNDCalc/month/{calcId}|""|GET|
+      |{"calcId": 1}|{"userGid": 0,"calcId": 0,"pndCalcStatus": 0}|""|api/PNDCalc/month/{calcId}|""|POST|
+      |{"calcId": 1}|""|""|api/PNDCalc/month/{calcId}/comment|""|GET|
+      |{"calcId": 1}|{"comment": "string","userGid": 0}|""|api/PNDCalc/month/{calcId}/comment|""|POST|
+      |{"calcId": 1}|""|{"dealGid": 1}|api/PNDCalc/month/{calcId}/export|""|GET|
+      |""|""|""|api/PNDCalc/annual|""|GET|
+      |""|{"dealGid": 0,"reportDate": "string","modifiedDate": "string","userGid": 0}|""|api/PNDCalc/annual|""|POST|
+      |{"annualId": "string"}|""|""|api/PNDCalc/annual/{annualId}|""|GET|
+      |{"annualId": "string"}|""|""|api/PNDCalc/annual/{annualId}/comment|""|GET|
+      |{"annualId": "string"}|{"comment": "string","userGid": 0}|""|api/PNDCalc/annual/{annualId}/comment|""|POST|
+      |{"annualId": "string"}|{"id": 0,"userGid": 0}|""|api/PNDCalc/annual/{annualId}/exec|""|POST|
+      |{"annualId": "string"}|""|""|api/PNDCalc/annual/{annualId}/detail|""|GET|
+      |{"annualId": "string"}|""|""|api/PNDCalc/annual/{annualId}/export|""|GET|
+      |{"annualId": "string"}|{"deletedId": 0,"userGid": 0}|""|api/PNDCalc/annual/{annualId}/delete|""|POST|
+
+      Examples: Report
+      |data|json_|params|method|headers|typeRequest|
+      |""|""|{"UserGid": 1,"RoleName":"name","PeriodBegin":"string","PeriodEnd":"string","ModifiedDate":"string"}|api/Report/unattached_pre_expertises/excel|""|GET|
+      |""|""|{"UserGid": 1,"RoleName":"name","PeriodBegin":"string","PeriodEnd":"string","ModifiedDate":"string"}|api/Report/close_deals_for_vzl_clients/excel|""|GET|
+      |""|""|{"UserGid": 1,"RoleName":"name","PeriodBegin":"string","PeriodEnd":"string","ModifiedDate":"string"}|api/Report/overdue_controlled_deals_for_vzl_clients/excel|""|GET|
+      |""|""|{"UserGid": 1,"RoleName":"name","PeriodBegin":"string","PeriodEnd":"string","ModifiedDate":"string"}|api/Report/issued_loan_for_VZL_clients/excel|""|GET|
+      |""|""|{"UserGid": 1,"RoleName":"name","PeriodBegin":"string","PeriodEnd":"string","ModifiedDate":"string"}|api/Report/deals_with_lost_VZL/excel|""|GET|
+
+      Examples: Roles
+      |data|json_|params|method|headers|typeRequest|
+      |""|""|""|api/Roles|""|GET|
+
+      Examples: Sessions
+      |data|json_|params|method|headers|typeRequest|
+      |""|{"userGid": 0,"roleId": 0}|""|api/Sessions|""|POST|
+      |{"token": "string"}|""|""|api/Sessions/{token}|""|GET|
+
+      Examples: Users
+      |data|json_|params|method|headers|typeRequest|
+      |""|""|""|api/Users|""|GET|
