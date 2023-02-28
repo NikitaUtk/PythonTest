@@ -26,6 +26,7 @@ class Responce:
             responce = requests.post(a.url + method,
                                  auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password),
                                  headers=headers,
+                                 params=params,
                                  json=json
                                  )
             print(responce.url)
@@ -43,6 +44,6 @@ class Responce:
 
     if __name__ == "__main__":
         # repalceVar(method="api/Deals/{dealGid}/accounts/{accountGid}",data = {"dealGid": "11", "accountGid": "12"} )
-        s = getResponce('',method="api/Audit", typeRequest="GET")
+        s = getResponce('',method="api/Expertise/{expId}/applied_method/{applMethodId}/set/{setId}/delete", typeRequest="POST", params={"userGid": 1}, data={"expId": 1, "applMethodId": 1, "setId": 1})
         print(s[0] + " Status code: " + str(s[1]))
         print(get_logged_in_session())
