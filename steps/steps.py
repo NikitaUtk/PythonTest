@@ -10,7 +10,6 @@ from requests_ntlm import HttpNtlmAuth
 def get_logged_in_session(context):
     context.sess = requests.Session()
     context.sess.get(a.url + a.connection, auth=HttpNtlmAuth(a.domain + '\\' + a.username, a.password))
-    print(1)
 
 @given(u'I have "{data}" "{json_}" "{params}" "{method}" "{headers}" "{typeRequest}"')
 def step_impl(context, data, json_, params, method, headers, typeRequest):
